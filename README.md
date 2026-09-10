@@ -1,5 +1,7 @@
 # Orbit Instagram Check
 
+![alt text](image-1.png)
+
 Dashboard ringan untuk membandingkan followers dan following Instagram, lalu menemukan akun yang belum follow back.
 
 Dashboard ini tidak meminta password Instagram dan tidak mengirim data ke backend. File ZIP atau JSON diproses langsung di browser pengguna.
