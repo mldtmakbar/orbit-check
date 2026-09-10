@@ -73,20 +73,6 @@ Tidak ada instalasi package yang wajib dilakukan.
 
 Untuk development, project juga dapat dijalankan melalui static server apa pun. Tidak diperlukan database atau backend.
 
-## Deploy ke Vercel
-
-Project ini dapat langsung dideploy ke Vercel tanpa konversi React:
-
-1. Upload project ke repository GitHub.
-2. Buka [vercel.com](https://vercel.com) dan masuk dengan GitHub.
-3. Klik **Add New → Project**.
-4. Pilih repository dashboard ini.
-5. Biarkan **Framework Preset** sebagai **Other** atau **No Framework**.
-6. Kosongkan **Build Command** dan gunakan folder project sebagai **Output Directory**.
-7. Klik **Deploy**.
-
-File `vercel.json` sudah disediakan untuk konfigurasi static hosting. React tidak wajib karena seluruh analisis berjalan di browser pengguna. Konversi ke React hanya diperlukan jika project nanti membutuhkan banyak halaman, routing, atau komponen yang jauh lebih besar.
-
 ## Mengakses lewat GitHub Pages
 
 Dashboard dapat digunakan langsung melalui link GitHub Pages yang dibagikan oleh pemilik aplikasi. Tidak perlu menginstal aplikasi atau membuat akun tambahan.
