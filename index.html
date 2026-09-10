@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbit Instagram Check</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="layout-overrides.css?v=2" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="."><span class="brand-mark">◎</span> orbit / check</a>
+        <div class="privacy-note"><span class="status-dot"></span> data tetap di perangkatmu</div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">INSTAGRAM RELATIONSHIP AUDIT</p>
+          <h1>Kenali jaringanmu.<br /><em>Dengan lebih jernih.</em></h1>
+          <p class="lede">Bandingkan followers dan following dari data ekspor Instagram untuk menemukan koneksi yang belum follow back.</p>
+        </div>
+        <div class="hero-orbit" aria-hidden="true"><span></span><span></span><span></span><b>IG<br />DATA</b></div>
+      </section>
+
+      <section class="import-panel">
+        <div class="panel-heading"><div><p class="eyebrow">01 / IMPORT DATA</p><h2>Upload data Instagram</h2></div><span class="file-hint">diproses lokal di browser</span></div>
+        <label class="zipzone" id="zipZone">
+          <input type="file" accept=".zip,application/zip" data-kind="zip" />
+          <span class="zip-icon">▣</span><span><strong>Upload satu file ZIP</strong><small>Gunakan file ZIP dari Instagram Data Download</small></span><b id="zipFile">Pilih file ZIP ↗</b>
+        </label>
+        <div class="or-divider"><span>atau pilih JSON satu per satu</span></div>
+        <div class="drop-grid">
+          <label class="dropzone" id="followersZone">
+            <input type="file" accept=".json,application/json" data-kind="followers" multiple />
+            <span class="drop-icon">↗</span><span class="drop-title">Followers</span><span class="drop-file" id="followersFile">Pilih followers_1.json</span>
+          </label>
+          <label class="dropzone" id="followingZone">
+            <input type="file" accept=".json,application/json" data-kind="following" multiple />
+            <span class="drop-icon">↗</span><span class="drop-title">Following</span><span class="drop-file" id="followingFile">Pilih following.json</span>
+          </label>
+        </div>
+        <label class="extra-zone" id="extraZone">
+          <input type="file" accept=".json,application/json" data-kind="extra" multiple />
+          <span class="extra-icon">＋</span><span><strong>Data Instagram lainnya</strong><small>Opsional: blocked, close friends, requests, restricted, hashtags, dan lainnya</small></span><b id="extraFile">Pilih beberapa JSON ↗</b>
+        </label>
+        <div class="import-actions"><button class="primary" id="analyzeButton" disabled>Analisis jaringan <span>→</span></button><p id="importStatus">Pilih kedua file untuk memulai.</p></div>
+      </section>
+
+      <section class="results" id="results" hidden>
+        <div class="section-title"><div><p class="eyebrow">02 / OVERVIEW</p><h2>Snapshot jaringanmu</h2></div><button class="text-button" id="resetButton">Reset analisis ×</button></div>
+        <div class="stats-grid">
+          <article class="stat-card accent"><span class="stat-label">FOLLOWERS</span><strong id="followersCount">0</strong><small>akun mengikuti kamu</small></article>
+          <article class="stat-card"><span class="stat-label">FOLLOWING</span><strong id="followingCount">0</strong><small>akun yang kamu ikuti</small></article>
+          <article class="stat-card"><span class="stat-label">FOLLOW BACK</span><strong id="mutualCount">0</strong><small>koneksi dua arah</small></article>
+          <article class="stat-card warning"><span class="stat-label">BELUM FOLLOW BACK</span><strong id="notFollowingBackCount">0</strong><small>following kamu yang belum kembali</small></article>
+        </div>
+        <div class="content-grid">
+          <section class="list-panel"><div class="list-head"><div><p class="eyebrow">FOLLOWING KAMU</p><h3>Belum follow back</h3></div><span class="count-pill" id="listCount">0 akun</span></div><div class="toolbar"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Cari username..." /></label><select id="sortSelect" aria-label="Urutkan daftar"><option value="az">A → Z</option><option value="za">Z → A</option></select></div><div class="account-list" id="accountList"></div><div class="empty-state" id="emptyState" hidden><span>✦</span><strong>Semua koneksi seimbang</strong><p>Tidak ada akun yang terdeteksi belum follow back.</p></div></section>
+          <aside class="insight-panel"><p class="eyebrow">QUICK READ</p><h3>Komposisi<br /><em>koneksimu</em></h3><div class="ring-wrap"><div class="ring" id="ring"><div><strong id="mutualPercent">0%</strong><small>mutual</small></div></div></div><div class="legend"><div><i class="legend-dot mutual"></i><span>Follow back</span><b id="legendMutual">0</b></div><div><i class="legend-dot nonmutual"></i><span>Belum follow back</span><b id="legendNonmutual">0</b></div></div><p class="insight-copy" id="insightCopy">Upload datamu untuk melihat ringkasan jaringan.</p></aside>
+        </div>
+        <section class="extra-section"><div class="section-title"><div><p class="eyebrow">03 / DATA LAINNYA</p><h2>Aktivitas dan daftar Instagram</h2></div><span class="file-hint">opsional</span></div><div class="extra-grid" id="extraGrid"></div><div class="extra-detail" id="extraDetail" hidden><div class="list-head"><div><p class="eyebrow" id="extraDetailLabel">DATA</p><h3 id="extraDetailTitle">Pilih kategori</h3></div><span class="count-pill" id="extraDetailCount">0 akun</span></div><div class="account-list" id="extraList"></div></div></section>
+      </section>
+      <footer><span>ORBIT / CHECK</span><span>Analisis lokal · Tidak ada data yang dikirim</span></footer>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

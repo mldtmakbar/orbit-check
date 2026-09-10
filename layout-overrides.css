@@ -1,0 +1,163 @@
+/* Stable card layout and responsive spacing */
+.import-panel,
+.list-panel,
+.insight-panel,
+.extra-detail {
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.drop-grid,
+.stats-grid,
+.content-grid,
+.extra-grid {
+  align-items: stretch;
+}
+
+.dropzone,
+.extra-zone,
+.zipzone,
+.stat-card,
+.extra-card,
+.list-panel,
+.insight-panel,
+.extra-section {
+  min-width: 0;
+}
+
+.zipzone span:nth-of-type(2),
+.extra-zone span:nth-of-type(2) {
+  min-width: 0;
+}
+
+.zipzone b,
+.extra-zone b {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card small {
+  line-height: 1.4;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.extra-card {
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+}
+
+.extra-card strong {
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.extra-card small {
+  margin-top: 0;
+}
+
+.account-list {
+  scrollbar-gutter: stable;
+}
+
+.import-actions {
+  margin-top: 24px;
+  gap: 22px;
+}
+
+.import-actions p {
+  line-height: 1.5;
+}
+
+@media (max-width: 750px) {
+  .shell {
+    padding: 0 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat-card {
+    min-height: 128px;
+  }
+
+  .stat-card strong {
+    font-size: 28px;
+  }
+
+  .drop-grid {
+    gap: 10px;
+  }
+
+  .zipzone,
+  .extra-zone {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .zipzone b,
+  .extra-zone b {
+    max-width: 35%;
+  }
+
+  .extra-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .extra-card {
+    min-height: 118px;
+    padding: 14px;
+  }
+
+  .extra-detail {
+    padding: 22px 18px;
+  }
+
+  .import-actions {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 460px) {
+  .stat-card {
+    padding: 15px 12px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-card strong {
+    font-size: 25px;
+  }
+
+  .stat-card small {
+    font-size: 10px;
+  }
+
+  .extra-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zipzone,
+  .extra-zone {
+    flex-wrap: wrap;
+  }
+
+  .zipzone b,
+  .extra-zone b {
+    width: 100%;
+    margin-left: 53px;
+    max-width: calc(100% - 53px);
+  }
+}

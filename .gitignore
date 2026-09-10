@@ -1,0 +1,11 @@
+# Jangan publikasikan data pribadi hasil ekspor Instagram
+followers*.json
+following.json
+blocked_profiles.json
+close_friends.json
+hide_story_from.json
+pending_follow_requests.json
+recent_follow_requests.json
+recently_unfollowed_profiles.json
+removed_suggestions.json
+restricted_profiles.json
