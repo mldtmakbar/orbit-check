@@ -1,98 +1,115 @@
 # Orbit Instagram Check
 
-![alt text](image-1.png)
+> A private, client-side dashboard for understanding your Instagram connections.
 
-Dashboard ringan untuk membandingkan followers dan following Instagram, lalu menemukan akun yang belum follow back.
+[Open the live dashboard](https://orbit-check.vercel.app/)
 
-Dashboard ini tidak meminta password Instagram dan tidak mengirim data ke backend. File ZIP atau JSON diproses langsung di browser pengguna.
+![Orbit Instagram Check dashboard preview](image.png)
 
-## Fitur
+Orbit Instagram Check compares your Instagram followers and following data, then highlights accounts that do not follow you back. It runs entirely in the browser: no Instagram password, login, scraping, or backend upload is required.
 
-- Membaca satu file ZIP hasil Instagram Data Download.
-- Membaca file `followers_*.json` dan `following.json` secara manual.
-- Mendukung beberapa file followers seperti `followers_1.json`, `followers_2.json`, dan seterusnya.
-- Membaca data tambahan Instagram: blocked profiles, close friends, following hashtags, hide story from, pending requests, recent requests, recently unfollowed, removed suggestions, dan restricted profiles.
-- Menampilkan jumlah followers, following, mutual, dan akun yang belum follow back.
-- Menampilkan jumlah dan daftar untuk setiap kategori data Instagram tambahan.
-- Mencari username dan mengurutkan daftar A-Z atau Z-A.
-- Membuka profil Instagram dari daftar hasil.
-- Reset data dan membersihkan file yang dipilih.
-- Tidak menyimpan data Instagram setelah halaman ditutup atau di-refresh.
+## Features
 
-## Yang diperlukan
+- Import one Instagram Data Download ZIP file.
+- Import `followers_*.json` and `following.json` manually.
+- Support multiple followers files such as `followers_1.json` and `followers_2.json`.
+- Read additional Instagram exports, including blocked profiles, close friends, following hashtags, hidden story accounts, pending requests, recent requests, recently unfollowed profiles, removed suggestions, and restricted profiles.
+- Show followers, following, mutual connections, and accounts that do not follow back.
+- Search usernames and sort results alphabetically.
+- Open an account directly from the results list.
+- View counts and lists for additional Instagram data categories.
+- Reset the current analysis at any time.
 
-- Browser modern seperti Chrome, Edge, Firefox, atau Safari.
-- File ZIP atau JSON dari fitur resmi Instagram Data Download.
-- Koneksi internet saat pertama kali membuka dashboard karena library pembaca ZIP dimuat dari jsDelivr.
+## Privacy First
 
-Dashboard ini adalah aplikasi static client-side. Tidak perlu React atau backend untuk menjalankannya.
+- Your files are parsed locally in your browser.
+- No Instagram password or account login is requested.
+- The dashboard does not scrape Instagram.
+- Your selected files are not uploaded to an application server.
+- Refreshing the page clears the current analysis.
 
-## Cara mendapatkan data Instagram
+## Requirements
 
-1. Buka Instagram dan masuk ke akunmu.
-2. Buka **Settings and activity**.
-3. Masuk ke **Accounts Center**.
-4. Pilih **Your information and permissions**.
-5. Pilih **Download your information**.
-6. Pilih akun Instagram yang ingin diproses.
-7. Pilih **Some of your information** jika tersedia.
-8. Pilih **Followers and following**.
-9. Pilih format **JSON**.
-10. Minta atau buat file download.
-11. Setelah Instagram menyiapkan file, download ZIP tersebut ke komputer.
+- A current version of Chrome, Edge, Firefox, or Safari.
+- An official Instagram Data Download ZIP or JSON export.
+- An internet connection on the first visit so the ZIP parsing library can load from jsDelivr.
 
-Nama menu Instagram dapat berubah. Gunakan fitur download informasi resmi Instagram dan jangan memasukkan password ke dashboard ini.
+## Get Your Instagram Data
 
-## Cara menggunakan dashboard
+1. Open Instagram and sign in to your account.
+2. Open **Settings and activity**.
+3. Go to **Accounts Center**.
+4. Select **Your information and permissions**.
+5. Select **Download your information**.
+6. Choose the Instagram account to export.
+7. Select **Some of your information**, if available.
+8. Select **Followers and following** and any additional categories you want to inspect.
+9. Choose **JSON** as the format.
+10. Request the download and wait for Instagram to prepare it.
+11. Download the ZIP file to your device.
 
-### Cara paling mudah: upload ZIP
+Instagram may change the names of these menus. Always use Instagram's official data download feature and never enter your password into this dashboard.
 
-1. Buka URL dashboard.
-2. Klik area **Upload satu file ZIP**.
-3. Pilih ZIP hasil download Instagram.
-4. Tunggu sampai status berubah menjadi **ZIP berhasil dibaca**.
-5. Klik **Analisis jaringan**.
+## Use the Dashboard
 
-Dashboard akan mencari file followers dan following di dalam ZIP, termasuk file yang berada di subfolder.
+### Option 1: Upload the ZIP
 
-### Cara manual: upload JSON
+1. Open the [live dashboard](https://orbit-check.vercel.app/).
+2. Select **Upload one ZIP file**.
+3. Choose the ZIP downloaded from Instagram.
+4. Wait until the file is read successfully.
+5. Select **Analyze network**.
 
-1. Klik area **Followers**, lalu pilih satu atau beberapa file `followers_*.json`.
-2. Klik area **Following**, lalu pilih `following.json`.
-3. Opsional, klik **Data Instagram lainnya**, lalu pilih satu atau beberapa JSON tambahan.
-4. Klik **Analisis jaringan**.
+The dashboard searches the ZIP, including its subfolders, for followers, following, and supported additional data files.
 
-Jika hasil sebelumnya masih terlihat, klik **Reset analysis**. Refresh halaman juga akan menghapus state analisis dan tidak membaca file otomatis.
+### Option 2: Upload JSON files
 
-## Instalasi lokal
+1. Select one or more `followers_*.json` files in **Followers**.
+2. Select `following.json` in **Following**.
+3. Optionally select additional Instagram JSON files in **Other Instagram data**.
+4. Select **Analyze network**.
 
-Tidak ada instalasi package yang wajib dilakukan.
+Use **Reset analysis** to clear the current result. Refreshing the page also starts a new empty session.
 
-1. Download project dari GitHub melalui **Code → Download ZIP**.
-2. Extract ZIP ke folder lokal.
-3. Buka `index.html` dengan browser.
-4. Upload ZIP atau JSON Instagram melalui dashboard.
+## Use Without Downloading
 
-Untuk development, project juga dapat dijalankan melalui static server apa pun. Tidak diperlukan database atau backend.
+The easiest way to use the project is through the public Vercel deployment:
 
-## Mengakses lewat GitHub Pages
+**[https://orbit-check.vercel.app/](https://orbit-check.vercel.app/)**
 
-Dashboard dapat digunakan langsung melalui link GitHub Pages yang dibagikan oleh pemilik aplikasi. Tidak perlu menginstal aplikasi atau membuat akun tambahan.
+Open the link, select your own Instagram ZIP or JSON files, and start the analysis. Each user selects and processes their own data locally in their browser.
 
-Jika dashboard dibagikan dalam bentuk file project:
+## Download the Project from GitHub
 
-1. Buka halaman repository GitHub.
-2. Klik tombol **Code**.
-3. Pilih **Download ZIP**.
-4. Extract file ZIP tersebut.
-5. Buka `index.html`.
+Downloading the source code is optional. If you want a local copy:
 
-Jika tersedia, gunakan URL GitHub Pages karena lebih praktis daripada mendownload file satu per satu.
+1. Open the [GitHub repository](https://github.com/mldtmakbar/orbit-check).
+2. Select **Code**.
+3. Select **Download ZIP**.
+4. Extract the downloaded archive.
+5. Open `index.html` in a browser.
 
-## Privasi dan batasan
+No database, backend, or package installation is required for the static version.
 
-- Dashboard hanya menganalisis data yang dipilih pengguna.
-- Dashboard tidak melakukan scraping Instagram.
-- Dashboard tidak meminta login Instagram.
-- Dashboard tidak dapat mengambil data hanya berdasarkan username.
-- Library ZIP dimuat dari jsDelivr. Selain library tersebut, tidak ada upload data ke server.
+## Technology
+
+- HTML, CSS, and vanilla JavaScript.
+- JSZip for reading Instagram ZIP files in the browser.
+- Vercel static deployment.
+
+React is not required for this project because the dashboard is a client-side static application.
+
+## Image in This README
+
+The preview above uses `image.png` from the repository root. To add or replace the preview image:
+
+1. Add your image file to the repository, for example `image.png`.
+2. Reference it with complete Markdown syntax:
+
+	```markdown
+	![Dashboard preview](image.png)
+	```
+
+3. Commit and push the image together with `README.md`.
+
+The image filename and path are case-sensitive on GitHub. A line containing only `!` will not display an image.
