@@ -41,7 +41,7 @@ async function readExtraFiles(files) {
     } catch { /* ignore unrelated or invalid JSON files */ }
   }
   $('#extraZone').classList.toggle('loaded', loaded > 0);
-  $('#extraFile').textContent = loaded ? `${loaded} kategori berhasil dibaca` : 'Tidak ada kategori yang dikenali';
+  $('#extraFile').textContent = loaded ? `${loaded} categories loaded successfully` : 'No supported categories found';
   updateImportState();
 }
 async function readFile(file, kind) {
@@ -52,32 +52,32 @@ async function readFile(file, kind) {
     state.files[kind] = file.name;
     const zone = $(`#${kind}Zone`);
     zone.classList.add('loaded');
-    $(`#${kind}File`).textContent = `${file.name} · ${state[kind].size} akun`;
+    $(`#${kind}File`).textContent = `${file.name} · ${state[kind].size} accounts`;
     updateImportState();
-  } catch { $('#importStatus').textContent = `File ${file.name} tidak bisa dibaca sebagai JSON.`; }
+  } catch { $('#importStatus').textContent = `File ${file.name} could not be read as JSON.`; }
 }
 async function readZip(file) {
   try {
-    if (!window.JSZip) throw new Error('ZIP library belum siap');
+    if (!window.JSZip) throw new Error('ZIP library is not ready');
     const zip = await JSZip.loadAsync(file);
     const entries = Object.values(zip.files).filter((entry) => !entry.dir);
     const followersEntry = entries.find((entry) => /(^|\/)followers[^/]*\.json$/i.test(entry.name));
     const followingEntry = entries.find((entry) => /(^|\/)following\.json$/i.test(entry.name)) || entries.find((entry) => /(^|\/)following_\d+\.json$/i.test(entry.name));
-    if (!followersEntry || !followingEntry) throw new Error('File followers/following tidak ditemukan');
+    if (!followersEntry || !followingEntry) throw new Error('Followers or following file not found');
     await readFile(new File([await followersEntry.async('blob')], followersEntry.name), 'followers');
     await readFile(new File([await followingEntry.async('blob')], followingEntry.name), 'following');
     const extraFiles = [];
     for (const entry of entries) if (extraTypeFor(entry.name)) extraFiles.push(new File([await entry.async('blob')], entry.name));
     if (extraFiles.length) await readExtraFiles(extraFiles);
     $('#zipZone').classList.add('loaded');
-    $('#zipFile').textContent = `${file.name} · siap dianalisis`;
-    $('#importStatus').textContent = 'ZIP berhasil dibaca. Data tidak diunggah ke server.';
-  } catch (error) { $('#importStatus').textContent = `ZIP tidak bisa dibaca: ${error.message}.`; }
+    $('#zipFile').textContent = `${file.name} · ready to analyze`;
+    $('#importStatus').textContent = 'ZIP loaded successfully. Your data was not uploaded.';
+  } catch (error) { $('#importStatus').textContent = `ZIP could not be read: ${error.message}.`; }
 }
 function updateImportState() {
   const ready = state.followers.size > 0 && state.following.size > 0;
   $('#analyzeButton').disabled = !ready;
-  $('#importStatus').textContent = ready ? 'Data siap dianalisis.' : 'Pilih kedua file untuk memulai.';
+  $('#importStatus').textContent = ready ? 'Data is ready to analyze.' : 'Choose both files to get started.';
 }
 function render() {
   const mutual = new Set([...state.following].filter((name) => state.followers.has(name)));
@@ -86,20 +86,20 @@ function render() {
   $('#followingCount').textContent = state.following.size.toLocaleString('id-ID');
   $('#mutualCount').textContent = mutual.size.toLocaleString('id-ID');
   $('#notFollowingBackCount').textContent = notBack.length.toLocaleString('id-ID');
-  $('#listCount').textContent = `${notBack.length} akun`;
+  $('#listCount').textContent = `${notBack.length} accounts`;
   $('#legendMutual').textContent = mutual.size;
   $('#legendNonmutual').textContent = notBack.length;
   const percentage = state.following.size ? Math.round((mutual.size / state.following.size) * 100) : 0;
   $('#mutualPercent').textContent = `${percentage}%`;
   $('#ring').style.background = `conic-gradient(var(--lime) ${percentage * 3.6}deg, #53605a ${percentage * 3.6}deg)`;
-  $('#insightCopy').textContent = notBack.length ? `${notBack.length} akun dari following kamu belum tercatat sebagai followers. Kamu bisa meninjau daftar ini satu per satu.` : 'Semua akun yang kamu ikuti juga tercatat mengikuti kamu.';
+  $('#insightCopy').textContent = notBack.length ? `${notBack.length} accounts you follow are not listed as your followers. You can review them one by one.` : 'Everyone you follow is also following you.';
   $('#results').hidden = false;
   renderList(notBack);
   renderExtras();
 }
 function renderExtras() {
   const entries = Object.entries(state.extras);
-  $('#extraGrid').innerHTML = entries.length ? entries.map(([key, item]) => `<button class="extra-card" data-extra="${key}"><span>${item.label}</span><strong>${item.values.size}</strong><small>lihat daftar →</small></button>`).join('') : '<div class="extra-empty">Upload JSON tambahan dari Instagram untuk melihat kategori lain di sini.</div>';
+  $('#extraGrid').innerHTML = entries.length ? entries.map(([key, item]) => `<button class="extra-card" data-extra="${key}"><span>${item.label}</span><strong>${item.values.size}</strong><small>view list →</small></button>`).join('') : '<div class="extra-empty">Upload additional Instagram JSON files to see more categories here.</div>';
   $('#extraDetail').hidden = true;
   document.querySelectorAll('.extra-card').forEach((card) => card.addEventListener('click', () => showExtra(card.dataset.extra)));
 }
@@ -109,18 +109,18 @@ function showExtra(key) {
   $('#extraDetail').hidden = false;
   $('#extraDetailLabel').textContent = 'INSTAGRAM DATA';
   $('#extraDetailTitle').textContent = item.label;
-  $('#extraDetailCount').textContent = `${item.values.size} item`;
-  $('#extraList').innerHTML = [...item.values].sort((a, b) => a.localeCompare(b)).map((name) => `<div class="account-row"><a href="https://www.instagram.com/${encodeURIComponent(name.replace(/^#/, ''))}" target="_blank" rel="noreferrer">${name.startsWith('#') ? name : `@${name}`}</a><span>lihat ↗</span></div>`).join('');
+  $('#extraDetailCount').textContent = `${item.values.size} items`;
+  $('#extraList').innerHTML = [...item.values].sort((a, b) => a.localeCompare(b)).map((name) => `<div class="account-row"><a href="https://www.instagram.com/${encodeURIComponent(name.replace(/^#/, ''))}" target="_blank" rel="noreferrer">${name.startsWith('#') ? name : `@${name}`}</a><span>view ↗</span></div>`).join('');
 }
 function renderList(accounts) {
   const query = normalize($('#searchInput').value);
   const direction = $('#sortSelect').value === 'za' ? -1 : 1;
   const filtered = accounts.filter((name) => name.includes(query)).sort((a, b) => a.localeCompare(b) * direction);
-  $('#accountList').innerHTML = filtered.map((name) => `<div class="account-row"><a href="https://www.instagram.com/${encodeURIComponent(name)}" target="_blank" rel="noreferrer">@${name}</a><span>lihat profil ↗</span></div>`).join('');
+  $('#accountList').innerHTML = filtered.map((name) => `<div class="account-row"><a href="https://www.instagram.com/${encodeURIComponent(name)}" target="_blank" rel="noreferrer">@${name}</a><span>view profile ↗</span></div>`).join('');
   $('#emptyState').hidden = filtered.length > 0;
 }
 document.querySelectorAll('input[type="file"]').forEach((input) => input.addEventListener('change', async (event) => { const files = [...event.target.files]; if (!files.length) return; if (input.dataset.kind === 'zip') await readZip(files[0]); else if (input.dataset.kind === 'extra') await readExtraFiles(files); else { state[input.dataset.kind] = new Set(); for (const file of files) await readFile(file, input.dataset.kind); } }));
 $('#analyzeButton').addEventListener('click', render);
 $('#searchInput').addEventListener('input', () => { const notBack = [...state.following].filter((name) => !state.followers.has(name)); renderList(notBack); });
 $('#sortSelect').addEventListener('change', () => $('#searchInput').dispatchEvent(new Event('input')));
-$('#resetButton').addEventListener('click', () => { state.followers.clear(); state.following.clear(); state.extras = {}; state.files = {}; document.querySelectorAll('input[type="file"]').forEach((input) => { input.value = ''; }); document.querySelectorAll('.dropzone,.zipzone,.extra-zone').forEach((zone) => zone.classList.remove('loaded')); $('#followersFile').textContent = 'Pilih followers_1.json'; $('#followingFile').textContent = 'Pilih following.json'; $('#zipFile').textContent = 'Pilih file ZIP ↗'; $('#extraFile').textContent = 'Pilih beberapa JSON ↗'; $('#results').hidden = true; updateImportState(); });
+$('#resetButton').addEventListener('click', () => { state.followers.clear(); state.following.clear(); state.extras = {}; state.files = {}; document.querySelectorAll('input[type="file"]').forEach((input) => { input.value = ''; }); document.querySelectorAll('.dropzone,.zipzone,.extra-zone').forEach((zone) => zone.classList.remove('loaded')); $('#followersFile').textContent = 'Choose followers_1.json'; $('#followingFile').textContent = 'Choose following.json'; $('#zipFile').textContent = 'Choose ZIP file ↗'; $('#extraFile').textContent = 'Choose multiple JSON files ↗'; $('#results').hidden = true; updateImportState(); });
